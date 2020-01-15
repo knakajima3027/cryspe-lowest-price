@@ -11,3 +11,8 @@ app.config.from_object('app.config')
 db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
