@@ -15,6 +15,7 @@ from app.models import Card
 session.query(Card).filter(Card.store_id=="magi").delete()
 session.commit()
 
+
 # Magiのスクレイピング
 for i in range(1, 10 ** 2):
     html = requests.get(
@@ -42,3 +43,6 @@ for i in range(1, 10 ** 2):
     
     else:
         break
+
+
+# イーサマーケット

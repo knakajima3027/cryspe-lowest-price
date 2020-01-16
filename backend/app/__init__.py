@@ -1,11 +1,12 @@
 from flask import Flask, render_template, jsonify
 from app.models import Card
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../../frontend/dist/static', template_folder='../../frontend/dist')
 
-# カード情報を全て返すAPI
-@app.route('/')
-def index():
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def index(path):
+    '''
     cards = Card.query.all()
 
     result = []
@@ -17,5 +18,5 @@ def index():
             'url': card.url
         }
         result.append(result_json)
-
-    return jsonify(result) 
+    '''
+    return render_template('index.html')
