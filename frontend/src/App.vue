@@ -1,28 +1,49 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <button @click="search()">カードを探す</button>
+    <div v-for="card in cards" v-bind:key="card.img">
+      <p>{{ card["name"] }}</p>
+      <p>{{ card["price"] }}</p>
+      <p><img :src="card.img"/></p>
+    </div>
   </div>
 </template>
 
+<style>
+  img {
+    width: 100px;
+  }
+</style>
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  data () {
+    return {
+      cards: [],
+      msg: ''
+    }
+  },
+  methods: {
+    search () {
+      fetch('/api')
+      .then( response => {
+        return response.json()
+      })
+      .then( response => {
+        this.cards.push(response)
+        for (let i = 0; i < response.length; i++) {
+          let card = {
+            "name": response[i]['name'],
+            "price": response[i]['price'],
+            "url": response[i]['url'],
+            "img": response[i]['img']
+          };
+          this.cards.push(card)
+        }
+      })
+      .catch( (err) => {
+        this.msg = err // エラー処理
+      });
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
