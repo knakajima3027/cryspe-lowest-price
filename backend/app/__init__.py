@@ -3,10 +3,9 @@ from app.models import Card
 
 app = Flask(__name__, static_folder='../../frontend/dist/static', template_folder='../../frontend/dist')
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def index(path):
-    '''
+
+@app.route('/api')
+def card():
     cards = Card.query.all()
 
     result = []
@@ -18,5 +17,12 @@ def index(path):
             'url': card.url
         }
         result.append(result_json)
-    '''
+    
+    return jsonify(result)
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def index(path):
     return render_template('index.html')
+
+
