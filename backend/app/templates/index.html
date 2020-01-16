@@ -3,8 +3,17 @@
 <head>
     <meta charset = "UTF-8">
 </head>
+<style>
+    img {
+        width: 200px;
+        height: 200px;
+    }
+</style>
 <body>
-    hello        
+    {% for card in cards %}
+    <img src="{{ card.img_url}}" alt="{{ card.card_name }}">
+    <p>{{ card.card_name }} : {{ card.card_price }}円</p>
+    {% endfor %}  
 </body>
 
 </html>
