@@ -1,12 +1,20 @@
 import sys
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Float, DateTime
-from app.config import Base
-from app.config import ENGINE
+
+try:
+    from app.config import Base
+except:
+    from config import Base
+
+try:
+    from app.config import ENGINE
+except:
+    from config import ENGINE
 
 
-class Magi(Base):
-    __tablename__ = 'magi_db' # テーブル名
+class Card(Base):
+    __tablename__ = 'CardDB' # テーブル名
 
     key = Column('id', Integer, primary_key = True)  # 識別キー
 
@@ -15,12 +23,11 @@ class Magi(Base):
     sale_id    = Column('sales_id', String(50))    # カードの販売ID
     url        = Column('url', String(150))        # カード詳細ページURL
     img_url    = Column('img_url', String(150))    # カード画像のURL
+    store_id   = Column('store', String(150))      # カード販売サイト名
 
 
+# 実行するとテーブルを生成
 def main(args):
-    """
-    メイン関数
-    """
     Base.metadata.create_all(bind=ENGINE)
 
 if __name__ == "__main__":
