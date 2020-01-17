@@ -1,9 +1,11 @@
 from flask import Flask, render_template, jsonify, request
 from app.models import Card
 from app.config import session
+from flask_cors import CORS
 
 app = Flask(__name__, static_folder='../../frontend/dist/static', template_folder='../../frontend/dist')
 
+CORS(app)
 
 @app.route('/api')
 def card():
@@ -17,7 +19,8 @@ def card():
             'name': card.card_name,
             'price': card.card_price,
             'img': card.img_url,
-            'url': card.url
+            'url': card.url,
+            'store': card.store_id
         }
         result.append(result_json)
     
