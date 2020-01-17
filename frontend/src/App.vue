@@ -19,7 +19,8 @@ export default {
   data () {
     return {
       cards: [],
-      msg: ''
+      name: '',
+      price: '',
     }
   },
   methods: {
