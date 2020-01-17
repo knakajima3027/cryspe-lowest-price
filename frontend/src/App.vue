@@ -1,5 +1,7 @@
 <template>
   <div>
+    <input type="text" v-model="name">
+    <input type="text" v-model="price">
     <button @click="search()">カードを探す</button>
     <div v-for="card in cards" v-bind:key="card.img">
       <p>{{ card["name"] }}</p>
@@ -25,12 +27,17 @@ export default {
   },
   methods: {
     search () {
-      fetch('/api')
+      const params = { card_name: this.name, card_price: this.price};
+      if (this.price === "") {
+        params["card_price"] = 10 ** 20
+      } 
+      const qs = new URLSearchParams(params);
+      fetch(`/api?${qs}`)
       .then( response => {
         return response.json()
       })
       .then( response => {
-        this.cards.push(response)
+        this.cards = [];
         for (let i = 0; i < response.length; i++) {
           let card = {
             "name": response[i]['name'],
